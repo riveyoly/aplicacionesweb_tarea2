@@ -1,0 +1,132 @@
+=====================================================================
+  INSTRUCCIONES DE DESPLIEGUE - CRUD DE CLIENTES
+  PHP + POO + PATRON MVC + POSTGRESQL
+  Aplicaciones Web - Semana 2 - Tarea 1
+=====================================================================
+
+ESTRUCTURA DEL PROYECTO (PATRON MVC)
+------------------------------------
+Tarea2/
+ |-- index.php                        Punto de entrada: recibe la accion
+ |                                    y llama al controlador.
+ |-- config/
+ |    `-- database.php                Conexion a PostgreSQL (clase Database).
+ |-- models/
+ |    `-- Cliente.php                 MODELO: clase Cliente con sus atributos
+ |                                    y los metodos del CRUD:
+ |                                    crear(), listar(), buscarPorId(),
+ |                                    actualizar() y eliminar().
+ |-- controllers/
+ |    `-- ClientesController.php      CONTROLADOR: recibe lo que hace el
+ |                                    usuario, usa el modelo y elige la vista.
+ |-- views/                           VISTAS: lo que ve el usuario (HTML).
+ |    |-- inicio.php                  Pagina "Bienvenida YOLANDA".
+ |    |-- error.php
+ |    |-- layout/header.php
+ |    |-- layout/footer.php
+ |    `-- clientes/
+ |         |-- index.php              Lista de clientes.
+ |         `-- form.php               Formulario para crear y editar.
+ |-- assets/css/estilos.css           Estilos de la pagina.
+ `-- database/clientes.sql            Script de la tabla clientes.
+
+
+REQUISITOS PREVIOS
+------------------
+1. XAMPP instalado (incluye Apache y PHP 8.1 o superior).
+2. PostgreSQL instalado y en ejecucion, con pgAdmin. Se necesita la
+   contrasena del usuario "postgres".
+3. Extension de PostgreSQL activada en PHP:
+   - Abrir el archivo C:\xampp\php\php.ini con el Bloc de notas.
+   - Buscar estas dos lineas y quitarles el punto y coma (;) inicial:
+         ;extension=pdo_pgsql   ->   extension=pdo_pgsql
+         ;extension=pgsql       ->   extension=pgsql
+   - Guardar el archivo y reiniciar Apache desde el panel de XAMPP.
+
+
+PASO 1 - CREAR LA BASE DE DATOS
+-------------------------------
+1. Abrir pgAdmin y conectarse al servidor.
+2. Clic derecho en "Databases" > Create > Database...
+   Nombre: tarea2   > Save.
+3. Seleccionar la base "tarea2" y abrir el Query Tool
+   (menu Tools > Query Tool).
+4. Abrir el archivo Tarea2\database\clientes.sql, copiar su contenido
+   en el Query Tool y ejecutarlo con F5 (o el boton de ejecutar).
+   Esto crea la tabla "clientes" y agrega 2 clientes de ejemplo.
+
+
+PASO 2 - COPIAR LA APLICACION AL SERVIDOR
+-----------------------------------------
+1. Descomprimir el archivo Tarea2_CRUD_Clientes.zip.
+2. Copiar la carpeta "Tarea2" dentro de C:\xampp\htdocs
+3. Debe quedar asi (sin carpetas repetidas una dentro de otra):
+
+      C:\xampp\htdocs\Tarea2\index.php
+      C:\xampp\htdocs\Tarea2\config\
+      C:\xampp\htdocs\Tarea2\controllers\
+      C:\xampp\htdocs\Tarea2\models\
+      C:\xampp\htdocs\Tarea2\views\
+      C:\xampp\htdocs\Tarea2\assets\
+      C:\xampp\htdocs\Tarea2\database\
+
+
+PASO 3 - CONFIGURAR LA CONEXION
+-------------------------------
+Abrir el archivo C:\xampp\htdocs\Tarea2\config\database.php
+con el Bloc de notas o Visual Studio Code y revisar estas lineas:
+
+      private const HOST     = '127.0.0.1';
+      private const PUERTO   = '5432';
+      private const BASE     = 'tarea2';
+      private const USUARIO  = 'postgres';
+      private const CLAVE    = 'TU_CONTRASEÑA';  <- escribir la contrasena de postgres
+
+Guardar el archivo.
+
+
+PASO 4 - INICIAR EL SERVIDOR
+----------------------------
+Abrir el panel de control de XAMPP y presionar "Start" en Apache.
+
+
+PASO 5 - ABRIR LA APLICACION
+----------------------------
+En el navegador ingresar a:
+
+      http://localhost/Tarea2/
+
+Aparece la pagina "Bienvenida YOLANDA". Desde el menu "Clientes"
+se puede:
+   - Ver la lista de clientes.
+   - Crear un cliente (boton "Nuevo").
+   - Editar un cliente (enlace "Editar").
+   - Eliminar un cliente (enlace "Eliminar", pide confirmacion).
+
+
+COMO FUNCIONA EL MVC EN ESTE PROYECTO
+-------------------------------------
+1. El usuario entra, por ejemplo, a index.php?accion=listar
+2. index.php lee la "accion" y llama al metodo listar() de
+   ClientesController.
+3. El controlador pide los datos al MODELO: Cliente::listar().
+4. El modelo consulta la tabla clientes y devuelve objetos Cliente.
+5. El controlador envia esos objetos a la VISTA views/clientes/index.php,
+   que los muestra en una tabla.
+
+Acciones disponibles en index.php?accion=...
+   inicio | listar | nuevo | guardar | editar | actualizar | eliminar
+
+
+SOLUCION DE PROBLEMAS
+---------------------
+- "No se pudo conectar con la base de datos":
+     revisar la contrasena, el puerto y el nombre de la base en
+     config/database.php, y que PostgreSQL este encendido.
+- "could not find driver":
+     falta activar pdo_pgsql en php.ini (ver Requisitos, punto 3).
+- "Not Found" al entrar a http://localhost/Tarea2/:
+     verificar que la carpeta este en C:\xampp\htdocs\Tarea2 y que
+     Apache este encendido.
+- "Ya existe un cliente con esta cedula":
+     la cedula ya esta registrada; usar otra o editar el cliente.

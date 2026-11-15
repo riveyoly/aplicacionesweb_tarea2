@@ -1,0 +1,58 @@
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: system-ui, Arial, sans-serif;
+    background: #f4f5f7;
+    color: #222;
+}
+
+nav { background: #1f2937; padding: 12px 24px; }
+nav a { color: #fff; margin-right: 18px; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+main {
+    max-width: 1200px;
+    margin: 24px auto;
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+}
+
+.barra { display: flex; justify-content: space-between; align-items: center; }
+
+.boton, button.boton {
+    background: #2563eb;
+    color: #fff;
+    border: 0;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+
+.acciones { white-space: nowrap; }
+.acciones form { display: inline; margin: 0 0 0 10px; }
+
+button.enlace { background: none; border: 0; padding: 0; cursor: pointer; font-size: 14px; }
+button.peligro { color: #dc2626; }
+
+.campo { margin-bottom: 14px; display: flex; flex-direction: column; gap: 4px; }
+.campo-check { flex-direction: row; align-items: center; gap: 8px; }
+.campo-check input { width: 18px; height: 18px; }
+
+input, textarea {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.error { color: #dc2626; }
+.botones { display: flex; gap: 16px; align-items: center; margin-top: 20px; }
+.mensaje { padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; background: #dcfce7; }
